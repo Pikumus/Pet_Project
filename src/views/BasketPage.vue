@@ -85,10 +85,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
- .container {
-   width: 100%;
- }
+.container {
+  width: 100%;
+}
 .basket {
   height: 100vh;
   overflow: auto;

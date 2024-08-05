@@ -29,8 +29,8 @@
 
 <script>
 import CardProduct from "../elements/CardProduct.vue";
-import { useStore } from "vuex"; // Импорт из 'vuex'
-import { computed, reactive } from "vue";
+import { useStore } from "vuex";
+import { computed } from "vue";
 import TheButton from "../ui/buttonbasket.vue";
 import { appRoutes } from "@/router/routes";
 import { useRouter } from "vue-router";
@@ -46,16 +46,15 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-    const addedProducts = reactive({});
 
     const products = computed(() => store.getters.getProducts);
+    const addedProducts = computed(() => store.getters.getAddedProducts);
 
     const handleAddProduct = (item) => {
-      addedProducts[item.id] = true;
       store.dispatch("addProduct", item);
     };
+
     const handleRemoveProduct = (productId) => {
-      addedProducts[productId] = false;
       store.dispatch("removeProduct", productId);
     };
 
