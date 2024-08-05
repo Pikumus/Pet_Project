@@ -8,11 +8,12 @@
           <p :class="['header__text', textClass]">
             {{ basketProducts.length }} {{ text }}
           </p>
-          <span :class="['header__text-subtext', subtextClass]">{{
-            totalPrice
-          }}</span>
+          <span :class="['header__text-subtext', subtextClass]"
+            >{{ subtext }} {{ totalPrice }}
+          </span>
         </div>
         <slot name="icon"></slot>
+        <common-button @click="logout" class="header-button" text="Выйти" />
       </div>
     </div>
   </header>
@@ -21,15 +22,22 @@
 <script>
 import { useStore } from "vuex";
 import { computed } from "vue";
-// import basketProducts from "@/store/modules/basketProducts";
+import CommonButton from "@/components/ui/CommonButton.vue";
+import { useRouter } from "vue-router";
+import { appRoutes } from "@/router/routes";
 export default {
   name: "TheHeader",
+  components: { CommonButton },
   props: {
     title: {
       type: String,
       default: "",
     },
     text: {
+      type: String,
+      default: "",
+    },
+    subtext: {
       type: String,
       default: "",
     },
@@ -60,6 +68,7 @@ export default {
   },
   setup() {
     const store = useStore();
+    const router = useRouter();
     const basketProducts = computed(() => {
       return store.getters.getBasketProducts;
     });
@@ -69,7 +78,12 @@ export default {
         0
       );
     });
+    const logout = () => {
+      router.push(appRoutes.LoginPageRoute.path);
+      store.dispatch("logout");
+    };
     return {
+      logout,
       totalPrice,
       basketProducts,
     };
@@ -88,6 +102,7 @@ export default {
     align-items: center;
     color: white;
   }
+
   // .basket__icon {
   //   margin-left: 100px;
   // }
@@ -98,36 +113,54 @@ export default {
     line-height: 37.79px;
     text-align: left;
   }
+
   &__text-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
   }
+
   &__text-content {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
   }
+
   &__text {
     line-height: 20px;
     font-weight: 500;
     font-size: 17px;
     margin: 0;
   }
+
   &__text-subtext {
     line-height: 20px;
     font-weight: 500;
     font-size: 17px;
   }
 }
+
 .header__basket {
   gap: 60px;
   justify-content: center;
+
   .header__basket-text {
     display: none;
   }
+
   .header__basket-subtext {
     display: none;
   }
+}
+
+.header-button {
+  margin-bottom: 0;
+  background: black;
+  color: rgba(213, 140, 81, 1);
+  border: 1px solid rgba(213, 140, 81, 1);
+}
+.header-button:hover {
+  background: #d58c51;
+  color: black;
 }
 </style>

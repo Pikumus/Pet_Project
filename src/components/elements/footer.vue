@@ -12,6 +12,7 @@
 import buttonAddQuestVue from "../ui/buttonAddQuest.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
+
 export default {
   name: "footer-basket",
   components: {
@@ -70,6 +71,7 @@ export default {
     text-transform: uppercase;
     padding-right: 18px;
   }
+
   &__price {
     padding-right: 260px;
     display: inline-block;

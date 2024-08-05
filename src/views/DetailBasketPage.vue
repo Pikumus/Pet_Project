@@ -1,0 +1,89 @@
+<template>
+  <div class="detail">
+    <the-header
+      text="товара"
+      subtext="на сумму"
+      price="3 500 ₽"
+      :classNameBasket="header"
+    >
+      <template v-slot:basket__icon>
+        <arrowicon-vue class="arrow-icon"></arrowicon-vue>
+      </template>
+      <template v-slot:icon>
+        <basketicon></basketicon>
+      </template>
+    </the-header>
+    <card-product
+      v-if="selectedProduct"
+      :key="selectedProduct.id"
+      :item="selectedProduct"
+      card-class="card-detail"
+      titleClass="card-detail__title"
+      imageClass="card-detail__image"
+      textClass="card-detail__text"
+      price-class="card-detail__price"
+      wrapperClass="card-detail__wrapper"
+      spacerClass="card-detail__spacer"
+    >
+      <template v-slot:button>
+        <common-button
+          class="card-button"
+          @click="() => handleAddProduct(selectedProduct)"
+          text="В Корзину"
+        />
+      </template>
+    </card-product>
+  </div>
+</template>
+
+<script>
+import { useStore } from "vuex"; // Импорт из 'vuex'
+import { computed, reactive } from "vue";
+import CardProduct from "@/components/elements/CardProduct.vue";
+import TheHeader from "@/components/block/Header.vue";
+import basketicon from "@/components/icon/basketicon.vue";
+import arrowiconVue from "@/components/icon/arrowicon.vue";
+import CommonButton from "@/components/ui/CommonButton.vue";
+
+export default {
+  name: "detail-basket",
+  components: {
+    CommonButton,
+    arrowiconVue,
+    basketicon,
+    TheHeader,
+    CardProduct,
+  },
+  setup() {
+    const store = useStore();
+    const addedProducts = reactive({});
+    const selectedProduct = computed(() => store.getters.getSelectedProduct);
+
+    const handleAddProduct = (selectedProduct) => {
+      console.log(selectedProduct);
+      console.log("hoooool");
+      addedProducts[selectedProduct.id] = true;
+      store.dispatch("addProduct", selectedProduct);
+    };
+    return {
+      selectedProduct,
+      handleAddProduct,
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.card-button {
+  margin-bottom: 1%;
+  cursor: pointer;
+}
+
+.detail {
+  height: 100vh;
+  overflow: auto;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("../assets/image/detailFone 1.png");
+  z-index: 100;
+}
+</style>

@@ -1,24 +1,17 @@
 <template>
   <div :class="['card', cardClass]">
-    <img :class="['card__image', imageClass]" :src="item.img" alt="" />
-    <h2 :class="['card__title', titleClass]">
+    <img :class="[imageClass]" :src="item.img" alt="" />
+    <h2 :class="[titleClass]">
       {{ item.title }}
     </h2>
-    <p :class="['card__text', textClass]" :style="textStyle">
+    <p :class="[textClass]" :style="textStyle">
       {{ item.text }}
     </p>
-    <div :class="['container', wrapperClass]" :style="wrapperStyle">
-      <div
-        :class="['container__spacer', spacerClass]"
-        :style="spacerStyle"
-      ></div>
-      <p :class="['container__price', priceClass]" :style="priceStyle">
+    <div :class="[wrapperClass]" :style="wrapperStyle">
+      <div :class="[spacerClass]" :style="spacerStyle"></div>
+      <p :class="[priceClass]" :style="priceStyle">
         {{ item.price }} ₽
-        <slot
-          name="button"
-          :class="['container__button', buttonClass]"
-          :style="buttonStyle"
-        ></slot>
+        <slot name="button" :class="[buttonClass]" :style="buttonStyle"></slot>
       </p>
     </div>
   </div>
@@ -27,6 +20,7 @@
 <script>
 import { useStore, Product } from "vuex";
 import { computed } from "vue";
+import { appRoutes } from "@/router/routes";
 
 export default {
   name: "CardProduct",
@@ -129,13 +123,10 @@ export default {
     return {
       count,
       store,
+      appRoutes,
     };
   },
-  computed: {
-    // currentButton() {
-    //   return this.$route.name === "home" ? "TheButton" : "deleteicon";
-    // },
-  },
+  computed: {},
 };
 </script>
 
@@ -155,6 +146,7 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
   font-family: "Montserrat";
+
   &__image {
     margin: 0 auto;
     max-width: 90%;
@@ -171,12 +163,14 @@ export default {
     flex-wrap: wrap;
     word-wrap: break-word;
   }
+
   &__text {
     font-size: 14px;
     padding-left: 21px;
     padding-right: 30px;
     display: block;
   }
+
   .container {
     display: flex;
     justify-content: space-between;
@@ -185,6 +179,7 @@ export default {
     .spacer {
       flex-grow: 1;
     }
+
     &__price {
       display: flex;
       justify-content: space-between;
@@ -193,10 +188,15 @@ export default {
       font-size: 1.7em;
       padding: 30px 21px 36px 21px;
     }
+
     // &__button {
     //   padding-right: 21px;
     // }
   }
+}
+
+.card:hover {
+  color: rgba(213, 140, 81, 1);
 }
 
 .card__basket {
@@ -207,7 +207,7 @@ export default {
   height: auto;
   color: white;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
   font-family: "Montserrat";
 
@@ -221,30 +221,93 @@ export default {
     flex-wrap: wrap;
 
     // align-items: center;
-    margin-top: 20px; /* Добавлено для отступа сверху */
   }
+
   &-text {
     display: none;
   }
+
   &-image {
     margin: 0;
     max-width: 120px;
     align-items: center;
     max-height: 120px;
-    margin-left: 220px;
-    margin-bottom: 20px;
-    margin-right: 98px;
+    margin-left: 100px;
   }
+
   &-price {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
     color: orange;
-    gap: 15px;
+    gap: 30px;
     align-self: flex-end;
     margin-right: 181px;
   }
+
   .container {
     padding-left: 100px;
     padding-top: 20px;
     width: 25%;
+  }
+}
+
+.card-detail {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  border: none;
+  z-index: 100;
+
+  &__title {
+    margin-top: 60px;
+    color: rgba(213, 140, 81, 1);
+    font-family: Montserrat;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 36.57px;
+    text-align: left;
+    height: 74px;
+  }
+
+  &__image {
+    flex-grow: 1;
+    max-width: 510px;
+    border-radius: 10px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    margin-right: 160px;
+  }
+
+  &__text {
+    max-width: 520px;
+    position: absolute;
+    top: 37%;
+    right: 7%;
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #d3d3d3;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__spacer {
+    flex-grow: 1;
+  }
+
+  &__price {
+    position: absolute;
+    top: 50%;
+    left: 57%;
+    font-size: 23px;
+    display: flex;
+    align-items: center;
+    gap: 200px;
   }
 }
 </style>

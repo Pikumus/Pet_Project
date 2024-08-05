@@ -1,5 +1,6 @@
 <template>
   <svg
+    class="circle-hover"
     width="30"
     height="30"
     viewBox="0 0 30 30"
@@ -26,8 +27,9 @@
 // import { ref } from "vue";
 
 import { useStore } from "vuex";
+
 export default {
-  name: "ui-button",
+  name: "button-basket",
   components: {},
   props: {},
   setup(props) {
@@ -48,4 +50,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.circle-hover:hover {
+  fill: #d58c51;
+  transition: 1s;
+}
+</style>

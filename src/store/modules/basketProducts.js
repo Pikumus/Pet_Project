@@ -8,7 +8,12 @@ export default {
   },
   mutations: {
     addBasketProduct(state, product) {
-      state.basketProducts = [...state.basketProducts, product];
+      const exists = state.basketProducts.some(
+        (item) => item.id === product.id
+      );
+      if (!exists) {
+        state.basketProducts = [...state.basketProducts, product];
+      }
     },
     removeBasketProduct(state, productId) {
       state.basketProducts = state.basketProducts.filter(

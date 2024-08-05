@@ -1,48 +1,77 @@
 <template>
   <div class="main">
     <div :class="['container', 'main__wrapper', wrapperClass]">
-      <card-product v-for="(item, index) in products" :key="index" :item="item">
-        <template v-slot:button>
-          <the-button @click="() => handleAddProduct(item)"></the-button>
-        </template>
-      </card-product>
-      <card-product v-for="(item, index) in products" :key="index" :item="item">
+      <card-product
+        v-for="item in products"
+        :key="item.id"
+        :item="item"
+        @click="() => handleAddSelectProduct(item)"
+        cardClass="card"
+        imageClass="card__image"
+        titleClass="card__title"
+        textClass="card__text"
+        wrapperClass="container"
+        spacerClass="container__spacer"
+        priceClass="container__price"
+        buttonClass="container__button"
+      >
         <template v-slot:button>
           <the-button
-            @click="() => handleAddProduct(item)"
-          ></the-button> </template
-      ></card-product>
+            v-if="!addedProducts[item.id]"
+            @click.stop="() => handleAddProduct(item)"
+          ></the-button>
+          <deleteicon v-else @click.stop="handleRemoveProduct(item.id)" />
+        </template>
+      </card-product>
     </div>
   </div>
 </template>
 
 <script>
-// import { ref } from "vue";
 import CardProduct from "../elements/CardProduct.vue";
-import { useStore } from "vuex";
-import { computed } from "vue";
+import { useStore } from "vuex"; // Импорт из 'vuex'
+import { computed, reactive } from "vue";
 import TheButton from "../ui/buttonbasket.vue";
+import { appRoutes } from "@/router/routes";
+import { useRouter } from "vue-router";
+import deleteicon from "../icon/deleteicon.vue";
 
 export default {
   name: "block-main",
   components: {
     TheButton,
     CardProduct,
+    deleteicon,
   },
-  props: {},
   setup() {
     const store = useStore();
+    const router = useRouter();
+    const addedProducts = reactive({});
 
-    const products = computed(() => {
-      return store.getters.getProducts;
-    });
+    const products = computed(() => store.getters.getProducts);
+
     const handleAddProduct = (item) => {
-      console.log(item);
+      addedProducts[item.id] = true;
       store.dispatch("addProduct", item);
     };
+    const handleRemoveProduct = (productId) => {
+      addedProducts[productId] = false;
+      store.dispatch("removeProduct", productId);
+    };
+
+    const handleAddSelectProduct = (item) => {
+      store.dispatch("setSelectedProduct", item);
+      router.push(`${appRoutes.detailPageRoute.path.replace(":id", item.id)}`);
+    };
+
     return {
       products,
       handleAddProduct,
+      handleRemoveProduct,
+      handleAddSelectProduct,
+      appRoutes,
+      router,
+      addedProducts,
     };
   },
 };
@@ -51,9 +80,10 @@ export default {
 <style lang="scss" scoped>
 .main {
   &__wrapper {
+    padding-bottom: 5%;
     padding-top: 5.5%;
     margin: 0 auto;
-    height: 552px;
+    height: 100%;
     display: flex;
     gap: 1em;
     justify-content: space-between;

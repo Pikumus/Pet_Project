@@ -2,7 +2,8 @@
   <div class="home">
     <the-header
       title="НАША ПРОДУКЦИЯ"
-      text="товара на сумму"
+      text="товара"
+      subtext="на сумму"
       price="3 500 ₽"
       :classNameBasket="header"
       ><template v-slot:icon> <basketicon></basketicon> </template>
