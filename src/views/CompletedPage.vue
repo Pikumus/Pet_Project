@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 setTimeout(() => {
   router.go(-1);
-}, "2000");
+}, "500");
 </script>
 
 <template>

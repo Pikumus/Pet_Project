@@ -39,6 +39,7 @@ export default {
     function navigateToCompletedPage() {
       if (basketProducts.value.length > 0) {
         router.push(appRoutes.CompletedPageRoute.path);
+        store.dispatch("clearBasket");
       }
     }
 

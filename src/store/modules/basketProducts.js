@@ -39,6 +39,9 @@ export default {
         product.added = added;
       }
     },
+    clearBasket(state) {
+      state.basketProducts = [];
+    },
   },
   actions: {
     addProduct({ commit }, product) {
@@ -48,6 +51,9 @@ export default {
     removeProduct({ commit }, productId) {
       commit("removeBasketProduct", productId);
       commit("updateProductAddedState", { productId, added: false });
+    },
+    clearBasket({ commit }) {
+      commit("clearBasket");
     },
   },
 };
