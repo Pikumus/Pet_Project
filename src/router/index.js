@@ -3,11 +3,12 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import { appRoutes } from "@/router/routes";
 
 const routes = [
-  appRoutes.basketPageRoute,
-  appRoutes.mainPageRoute,
+  appRoutes.BasketPageRoute,
+  appRoutes.MainPageRoute,
   appRoutes.LoginPageRoute,
   appRoutes.RegistrationPageRoute,
-  appRoutes.detailPageRoute,
+  appRoutes.DetailPageRoute,
+  appRoutes.CompletedPageRoute,
 ];
 
 const router = createRouter({

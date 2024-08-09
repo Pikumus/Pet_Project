@@ -41,8 +41,8 @@ import { useStore } from "vuex"; // Импорт из 'vuex'
 import { computed, reactive } from "vue";
 import CardProduct from "@/components/elements/CardProduct.vue";
 import TheHeader from "@/components/block/Header.vue";
-import basketicon from "@/components/icon/basketicon.vue";
-import arrowiconVue from "@/components/icon/arrowicon.vue";
+import basketicon from "@/components/icon/BasketIcon.vue";
+import arrowiconVue from "@/components/icon/BackIcon.vue";
 import CommonButton from "@/components/ui/CommonButton.vue";
 
 export default {

@@ -4,13 +4,17 @@ export default {
   },
   getters: {
     isAuthenticated: (state) => Boolean(state.user),
-    currentUser: (state) => state.user,
+    isAgreed: (state) =>
+      state.user ? Boolean(state.user.agreedToUpdates) : false,
   },
   mutations: {
-    registrationUser(state, user) {
+    registrationUser(state, newUser) {
       const users = JSON.parse(localStorage.getItem("users")) || [];
-      users.push(user);
-      localStorage.setItem("users", JSON.stringify(users));
+      const userExist = users.some((user) => user.email === newUser.email);
+      if (!userExist) {
+        users.push(newUser);
+        localStorage.setItem("users", JSON.stringify(users));
+      }
     },
     loginUser(state, { email, password }) {
       const users = JSON.parse(localStorage.getItem("users")) || [];
@@ -26,6 +30,12 @@ export default {
       state.user = null;
       localStorage.removeItem("user");
     },
+    updateUserAgreement(state, agreedToUpdates) {
+      if (state.user === false) {
+        state.user.agreedToUpdates = agreedToUpdates;
+        localStorage.setItem("user", JSON.stringify(state.user));
+      }
+    },
   },
   actions: {
     login({ commit }, user) {
@@ -39,6 +49,9 @@ export default {
     },
     resetState({ commit }) {
       commit("logout");
+    },
+    updateUserAgreement({ commit }, agreedToUpdates) {
+      commit("updateUserAgreement", agreedToUpdates);
     },
   },
 };

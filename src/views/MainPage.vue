@@ -14,7 +14,7 @@
 
 <script>
 // @ is an alias to /src
-import basketicon from "@/components/icon/basketicon.vue";
+import basketicon from "@/components/icon/BasketIcon.vue";
 import TheHeader from "../components/block/Header.vue";
 import Main from "@/components/block/Main.vue";
 import { useStore } from "vuex";

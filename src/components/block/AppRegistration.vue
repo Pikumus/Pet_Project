@@ -12,6 +12,7 @@ const store = useStore();
 const formData = reactive({
   registrationEmail: "",
   registrationPassword: "",
+  isAgreedToUpdates: false,
 });
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const customErrorMessage = ref("");
@@ -42,8 +43,10 @@ const register = () => {
   const user = {
     email: formData.registrationEmail,
     password: formData.registrationPassword,
+    isAgreedToUpdates: formData.isAgreedToUpdates,
   };
   store.dispatch("register", user);
+  store.dispatch("updateUserAgreement", formData.isAgreedToUpdates);
   if (!store.getters.isRegistartion) {
     router.push(appRoutes.LoginPageRoute.path);
   }
@@ -107,6 +110,7 @@ const submitForm = async () => {
           class="registration__container-checkbox"
           type="checkbox"
           id="loginUpdates"
+          v-model="formData.isAgreedToUpdates"
         />
         <label class="registration__container-label" for="loginUpdates">
           Я согласен получать обновления на почту

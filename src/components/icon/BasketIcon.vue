@@ -2,7 +2,7 @@
 import { appRoutes } from "@/router/routes";
 </script>
 <template>
-  <router-link :to="appRoutes.basketPageRoute.path">
+  <router-link :to="appRoutes.BasketPageRoute.path">
     <svg
       width="50"
       height="50"

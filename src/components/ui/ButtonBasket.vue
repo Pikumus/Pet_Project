@@ -26,26 +26,12 @@
 <script>
 // import { ref } from "vue";
 
-import { useStore } from "vuex";
-
 export default {
   name: "button-basket",
   components: {},
   props: {},
-  setup(props) {
-    const store = useStore();
-    // const count = computed(() => {
-    //   return store.getters.getCount;
-    // });
-    const handleAddProduct = () => {
-      console.log(props.item);
-      store.dispatch("addProduct", props.item);
-    };
-
-    return {
-      handleAddProduct,
-      store,
-    };
+  setup() {
+    return {};
   },
 };
 </script>

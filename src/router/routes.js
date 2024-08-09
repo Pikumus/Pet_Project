@@ -4,14 +4,16 @@ import Login from "@/views/Login.vue";
 import Registration from "@/views/Registration.vue";
 import store from "@/store";
 import DetailBasketPage from "@/views/DetailBasketPage.vue";
+import CompletedPage from "@/views/CompletedPage.vue";
+
 export const appRoutes = {
-  mainPageRoute: {
+  MainPageRoute: {
     path: "/main",
     name: "Main",
     component: MainPage,
     meta: { requiresAuth: true },
   },
-  basketPageRoute: {
+  BasketPageRoute: {
     path: "/basket",
     name: "Basket",
     component: BasketPage,
@@ -26,7 +28,7 @@ export const appRoutes = {
       next();
     },
   },
-  detailPageRoute: {
+  DetailPageRoute: {
     path: "/product/:id",
     name: "productDetail",
     component: DetailBasketPage,
@@ -36,5 +38,10 @@ export const appRoutes = {
     path: "/registration",
     name: "Registration",
     component: Registration,
+  },
+  CompletedPageRoute: {
+    path: "/completed",
+    name: "Completed",
+    component: CompletedPage,
   },
 };

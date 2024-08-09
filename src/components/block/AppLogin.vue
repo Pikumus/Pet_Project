@@ -13,6 +13,7 @@ const router = useRouter();
 const formData = reactive({
   email: "",
   password: "",
+  isAgreedToUpdates: store.getters.isAgreed,
 });
 
 const customErrorMessage = ref("");
@@ -25,12 +26,12 @@ const minLengthWithMessage = (min) =>
 
 const rules = computed(() => ({
   email: {
-    required: helpers.withMessage("Поле не должно быть пустым ", required),
+    required: helpers.withMessage("Поле не должно быть пустым", required),
     email: helpers.withMessage("Некорректный email адрес", email),
     minLength: minLengthWithMessage(3),
   },
   password: {
-    required: helpers.withMessage("Поле не должно быть пустым ", required),
+    required: helpers.withMessage("Поле не должно быть пустым", required),
     minLength: minLengthWithMessage(3),
   },
 }));
@@ -40,9 +41,10 @@ const v$ = useVuelidate(rules, formData);
 const login = async () => {
   const { email, password } = formData;
   await store.dispatch("login", { email, password });
+  await store.dispatch("updateUserAgreement", formData.isAgreedToUpdates);
 
   if (store.getters.isAuthenticated) {
-    router.push(appRoutes.mainPageRoute.path);
+    router.push(appRoutes.MainPageRoute.path);
   } else {
     customErrorMessage.value = "Логин или пароль неверен";
   }
@@ -55,7 +57,6 @@ const submitForm = async () => {
     customErrorMessage.value = "Логин или пароль неверен";
   } else {
     await login();
-    console.log("good");
   }
 };
 </script>
@@ -66,7 +67,8 @@ const submitForm = async () => {
       <router-link
         :to="appRoutes.RegistrationPageRoute.path"
         class="login__link"
-        >Зарегистрироваться
+      >
+        Зарегистрироваться
       </router-link>
       <h1 class="login__title">ВХОД</h1>
       <input
@@ -106,6 +108,7 @@ const submitForm = async () => {
           class="login__container-checkbox"
           type="checkbox"
           id="loginUpdates"
+          v-model="formData.isAgreedToUpdates"
         />
         <label class="login__container-label" for="loginUpdates">
           Я согласен получать обновления на почту
@@ -119,14 +122,9 @@ const submitForm = async () => {
   </div>
 </template>
 
-<script>
-export default {
-  name: "app-login",
-  components: {},
-  props: {},
-  setup() {},
-};
-</script>
+<style lang="scss">
+/* Ваши стили */
+</style>
 
 <style lang="scss">
 .wrapper {

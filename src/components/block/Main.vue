@@ -31,10 +31,10 @@
 import CardProduct from "../elements/CardProduct.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
-import TheButton from "../ui/buttonbasket.vue";
+import TheButton from "../ui/ButtonBasket.vue";
 import { appRoutes } from "@/router/routes";
 import { useRouter } from "vue-router";
-import deleteicon from "../icon/deleteicon.vue";
+import deleteicon from "../icon/DeleteIcon.vue";
 
 export default {
   name: "block-main",
@@ -60,7 +60,7 @@ export default {
 
     const handleAddSelectProduct = (item) => {
       store.dispatch("setSelectedProduct", item);
-      router.push(`${appRoutes.detailPageRoute.path.replace(":id", item.id)}`);
+      router.push(`${appRoutes.DetailPageRoute.path.replace(":id", item.id)}`);
     };
 
     return {

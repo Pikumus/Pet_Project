@@ -41,11 +41,11 @@
 // import { ref } from "vue";
 import Header from "@/components/block/Header.vue";
 import CardProduct from "@/components/elements/CardProduct.vue";
-import arrowiconVue from "@/components/icon/arrowicon.vue";
-import footerVue from "@/components/elements/footer.vue";
+import arrowiconVue from "@/components/icon/BackIcon.vue";
+import footerVue from "@/components/elements/Footer.vue";
 import { useStore } from "vuex";
 import { computed } from "vue";
-import Deleteicon from "@/components/icon/deleteicon.vue";
+import Deleteicon from "@/components/icon/DeleteIcon.vue";
 import { appRoutes } from "@/router/routes";
 import { useRouter } from "vue-router";
 // import { mapGetters } from "vuex";
@@ -70,7 +70,7 @@ export default {
     const handleAddSelectProduct = (product) => {
       store.dispatch("setSelectedProduct", product);
       router.push(
-        `${appRoutes.detailPageRoute.path.replace(":id", product.id)}`
+        `${appRoutes.DetailPageRoute.path.replace(":id", product.id)}`
       );
     };
     return {
