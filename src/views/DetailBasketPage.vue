@@ -27,9 +27,15 @@
     >
       <template v-slot:button>
         <common-button
+          v-if="!addedProducts[selectedProduct.id]"
           class="card-button"
           @click="() => handleAddProduct(selectedProduct)"
           text="В Корзину"
+        />
+        <common-button
+          v-else
+          text="Удалить из корзины"
+          @click="() => handleRemoveProduct(selectedProduct.id)"
         />
       </template>
     </card-product>
@@ -38,7 +44,7 @@
 
 <script>
 import { useStore } from "vuex"; // Импорт из 'vuex'
-import { computed, reactive } from "vue";
+import { computed } from "vue";
 import CardProduct from "@/components/elements/CardProduct.vue";
 import TheHeader from "@/components/block/Header.vue";
 import basketicon from "@/components/icon/BasketIcon.vue";
@@ -56,8 +62,8 @@ export default {
   },
   setup() {
     const store = useStore();
-    const addedProducts = reactive({});
     const selectedProduct = computed(() => store.getters.getSelectedProduct);
+    const addedProducts = computed(() => store.getters.getAddedProducts);
 
     const handleAddProduct = (selectedProduct) => {
       console.log(selectedProduct);
@@ -65,7 +71,12 @@ export default {
       addedProducts[selectedProduct.id] = true;
       store.dispatch("addProduct", selectedProduct);
     };
+    const handleRemoveProduct = (productId) => {
+      store.dispatch("removeProduct", productId);
+    };
     return {
+      handleRemoveProduct,
+      addedProducts,
       selectedProduct,
       handleAddProduct,
     };
